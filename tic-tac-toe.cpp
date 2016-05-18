@@ -13,20 +13,20 @@ class TicTacToe
         int         _dim2[3][3];
     };
 
-    std::string     _name_1;
-    std::string     _name_2;
+    std::string     _name[2];
+//                    _name_2;
 
     int             _turn = 1;
 
 public:
     TicTacToe(void)
     {
-        std::cout << "Player 1 name : ";
-        if (not (std::cin >> _name_1))
-            throw std::runtime_error("End of input");
-        std::cout << "Player 2 name : ";
-        if (not (std::cin >> _name_2))
-            throw std::runtime_error("End of input");
+		for (std::size_t i(0) ; i < 2 ; ++i)
+		{
+			std::cout << "Player " << i + 1 << " name: ";
+        	if (not (std::cin >> _name[i]))
+            	throw std::runtime_error("End of input");
+		}
     }
 
     void display_board(void)
@@ -60,7 +60,7 @@ public:
 
         do
         {
-            std::cout << (_turn > 0 ? _name_1 : _name_2) << "'s turn ("
+            std::cout << _name[_turn < 0] << "'s turn ("
                     << (_turn > 0 ? 'O' : 'X') << ") : ";
             if (not (std::cin >> input))
                 return false;
@@ -92,7 +92,7 @@ public:
         /* If there is a winner, the game has finished */
         if (winner())
         {
-            std::cout << (_turn > 0 ? _name_2 : _name_1) << " won\n";
+            std::cout << _name[_turn > 0] << " won\n";
             return true;
         }
         /* If there is a free cell, the game must continue */
@@ -118,7 +118,5 @@ public:
 
 int                 main(void)
 {
-    TicTacToe       game;
-
-    return game.loop();
+    return TicTacToe().loop();
 }
