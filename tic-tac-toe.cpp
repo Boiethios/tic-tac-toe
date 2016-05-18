@@ -20,12 +20,12 @@ class TicTacToe
 public:
     TicTacToe(void)
     {
-		for (std::size_t i(0) ; i < 2 ; ++i)
-		{
-			std::cout << "Player " << i + 1 << " name: ";
-        	if (not (std::cin >> _name[i]))
-            	throw std::runtime_error("End of input");
-		}
+        for (std::size_t i(0) ; i < 2 ; ++i)
+        {
+            std::cout << "Player " << i + 1 << " name: ";
+            if (not (std::cin >> _name[i]))
+                throw std::runtime_error("End of input");
+        }
     }
 
     void display_board(void)
