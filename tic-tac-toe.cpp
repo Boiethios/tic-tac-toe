@@ -14,7 +14,6 @@ class TicTacToe
     };
 
     std::string     _name[2];
-//                    _name_2;
 
     int             _turn = 1;
 
