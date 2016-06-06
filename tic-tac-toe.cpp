@@ -1,34 +1,55 @@
 #include <iostream>
+#include <array>
 
 class TicTacToe
 {
-    /*
-     * 0  is a free cell,
-     * 1  is a cell owned by player 1 : 'O'
-     * -1 is a cell owned by player 2 : 'X'
-     */
+	enum PLAYER
+	{
+		NONE    = 0,
+		PLAYER1 = 1,  // 'O'
+		PLAYER2 = -1, // 'X'
+	};
+
     union
     {
-        int         _dim1[9] = {0};
-        int         _dim2[3][3];
+        PLAYER      _dim1[9] = {NONE};
+        PLAYER      _dim2[3][3];
     };
 
-    std::string     _name[2];
+    typedef std::array<std::string, 2> strarr2_t;
+    strarr2_t       _name;
 
     bool            _player1_turn;
 
-public:
-    TicTacToe(void) :
-        _player1_turn(true)
+
+    inline std::string get_player_name(std::size_t player)
     {
-        for (std::size_t i(0) ; i < 2 ; ++i)
-        {
-            std::cout << "Player " << i + 1 << " name: ";
-            if (not (std::cin >> _name[i]))
-                throw std::runtime_error("End of input");
-        }
+        std::string name;
+
+        std::cout << "Player " << player << " name: ";
+        if (not (std::cin >> name).good())
+            throw std::runtime_error("Input error");
+        return name;
     }
 
+public:
+    TicTacToe(void) :
+        _name{{get_player_name(1u), get_player_name(2u)}},
+        _player1_turn(true)
+    {
+    }
+
+    int loop(void)
+    {
+        do
+        {
+            display_board();
+            player_input();
+        } while (not game_finished());
+        return display_board(), 0;
+    }
+
+private:
     void display_board(void)
     {
         for (std::size_t i(0) ; i < 3 ; ++i)
@@ -38,10 +59,10 @@ public:
             {
                 switch (_dim2[i][j])
                 {
-                case 1:
+                case PLAYER1:
                     std::cout << "| O ";
                     break ;
-                case -1:
+                case PLAYER2:
                     std::cout << "| X ";
                     break ;
                 default:
@@ -53,21 +74,21 @@ public:
         std::cout << "+---+---+---+\n";
     }
 
-    /* Return false if player input has failed (CTRL + D, for example) */
-    bool player_input(void)
+    void player_input(void)
     {
-        int         input;
+        std::string   input;
+        int           choice;
 
         do
         {
             std::cout << _name[_player1_turn ? 0 : 1] << "'s turn ("
-                    << (_player1_turn ? 'O' : 'X') << ") : ";
-            if (not (std::cin >> input))
-                return false;
-        } while (input < 1 or input > 9 or _dim1[input - 1]);
-        _dim1[input - 1] = (_player1_turn ? 1 : -1);
+                    << (_player1_turn ? 'O' : 'X') << ") : " << std::flush;
+            if (not (std::cin >> input).good())
+                throw std::runtime_error("Input error");
+            choice = std::stoi(input);
+        } while (choice < 1 or choice > 9 or _dim1[choice - 1] != NONE);
+        _dim1[choice - 1] = (_player1_turn ? PLAYER1 : PLAYER2);
         _player1_turn = not _player1_turn;
-        return true;
     }
 
     bool winner(void)
@@ -92,27 +113,16 @@ public:
         /* If there is a winner, the game has finished */
         if (winner())
         {
-            std::cout << _name[_player1_turn ? 1 : 0] << " won\n";
+            std::cout << _name[_player1_turn ? 1 : 0] << " won:\n";
             return true;
         }
         /* If there is a free cell, the game must continue */
         for (std::size_t i(0) ; i < 9 ; ++i)
-            if (not _dim1[i])
+            if (_dim1[i] == NONE)
                 return false;
-        /* There are no more free cells : this is a draw */
-        std::cout << "Draw\n";
+        /* There are no more free cells: this is a draw */
+        std::cout << "Draw:\n";
         return true;
-    }
-
-    int loop(void)
-    {
-        do
-        {
-            display_board();
-            if (game_finished())
-                return 0;
-        } while (player_input());
-        return -1;
     }
 };
 
