@@ -3,12 +3,12 @@
 
 class TicTacToe
 {
-	enum PLAYER
-	{
-		NONE    = 0,
-		PLAYER1 = 1,  // 'O'
-		PLAYER2 = -1, // 'X'
-	};
+    enum PLAYER
+    {
+        NONE    = 0,
+        PLAYER1 = 1,  // 'O'
+        PLAYER2 = -1, // 'X'
+    };
 
     union
     {
