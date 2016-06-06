@@ -4,8 +4,8 @@ class TicTacToe
 {
     /*
      * 0  is a free cell,
-     * 1  is a cell owned by player 1
-     * -1 is a cell owned by player 2
+     * 1  is a cell owned by player 1 : 'O'
+     * -1 is a cell owned by player 2 : 'X'
      */
     union
     {
@@ -15,10 +15,11 @@ class TicTacToe
 
     std::string     _name[2];
 
-    int             _turn = 1;
+    bool            _player1_turn;
 
 public:
-    TicTacToe(void)
+    TicTacToe(void) :
+        _player1_turn(true)
     {
         for (std::size_t i(0) ; i < 2 ; ++i)
         {
@@ -59,13 +60,13 @@ public:
 
         do
         {
-            std::cout << _name[_turn < 0] << "'s turn ("
-                    << (_turn > 0 ? 'O' : 'X') << ") : ";
+            std::cout << _name[_player1_turn ? 0 : 1] << "'s turn ("
+                    << (_player1_turn ? 'O' : 'X') << ") : ";
             if (not (std::cin >> input))
                 return false;
         } while (input < 1 or input > 9 or _dim1[input - 1]);
-        _dim1[input - 1] = _turn;
-        _turn = -_turn;
+        _dim1[input - 1] = (_player1_turn ? 1 : -1);
+        _player1_turn = not _player1_turn;
         return true;
     }
 
@@ -91,7 +92,7 @@ public:
         /* If there is a winner, the game has finished */
         if (winner())
         {
-            std::cout << _name[_turn > 0] << " won\n";
+            std::cout << _name[_player1_turn ? 1 : 0] << " won\n";
             return true;
         }
         /* If there is a free cell, the game must continue */
