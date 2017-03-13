@@ -1,6 +1,5 @@
-# tic-tac-toe
-A very simple C++11 example of the Tic tac toe game.
+# Some very simple C++ examples
 
-Compile it with c++ -std=c++11 tic-tac-toe.cpp
+I wrote the tic tac toe code, because I saw a lot of people writing it as an exercise.
 
-I wrote this code, because I saw a lot of people writing it as exercise.
+The create-file.cpp example show the most eye-pleasant way to create a file.
