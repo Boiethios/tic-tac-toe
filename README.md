@@ -19,3 +19,9 @@ Compile the file with:
 ```
 c++ -std=c++1z -Wall -Wextra unused-param.cpp -lstdc++fs
 ```
+
+## Flags in a scoped enum
+
+Scoped enum are cool because they are namespaced and are not silentely casted to their underlying type, but we cannot use them as bitmask for flags because no logical operations exist for the type.
+
+We implement those operations, but they are deactivated by default. The user must activate them with the struct `is_bitmask_enum`.
