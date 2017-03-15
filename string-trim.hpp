@@ -1,4 +1,5 @@
-#include <cwctype>
+#include <string>
+#include <locale>
 #include <algorithm>
 #include <functional>
 
