@@ -25,3 +25,8 @@ c++ -std=c++1z -Wall -Wextra unused-param.cpp -lstdc++fs
 Scoped enum are cool because they are namespaced and are not silentely casted to their underlying type, but we cannot use them as bitmask for flags because no logical operations exist for the type.
 
 We implement those operations, but they are deactivated by default. The user must activate them with the struct `is_bitmask_enum`.
+
+## Generic trim of a string
+
+Some functions that trim all type of strings in every situation and every locals.
+
