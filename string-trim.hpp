@@ -1,4 +1,5 @@
-#include <cwctype>
+#include <string>
+#include <locale>
 #include <algorithm>
 #include <functional>
 
@@ -44,7 +45,7 @@ inline std::basic_string<CharT> left_trim(
     CharT const * arr,
     std::function<bool(CharT)> is_sp = is_space<CharT>)
 {
-	return left_trim(std::move(std::basic_string<CharT>{ arr }));
+    return left_trim(std::move(std::basic_string<CharT>{ arr }));
 }
 
 /*
@@ -77,7 +78,7 @@ inline std::basic_string<CharT> right_trim(
     CharT const * arr,
     std::function<bool(CharT)> is_sp = is_space<CharT>)
 {
-	return right_trim(std::move(std::basic_string<CharT>{ arr }));
+    return right_trim(std::move(std::basic_string<CharT>{ arr }));
 }
 
 /*
