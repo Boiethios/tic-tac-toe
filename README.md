@@ -30,3 +30,17 @@ We implement those operations, but they are deactivated by default. The user mus
 
 Some functions that trim all type of strings in every situation and every locals.
 
+## Encapsulate a C API in a C++ iterator
+
+Glob-iterator encapsulates the POSIX glob into a C++ iterator. Compile it with
+
+```
+c++ -std=c++1z -Wall -Wextra glob/glob-iterator.cpp glob/glob-main.cpp -lstdc++fs
+```
+
+Test it:
+
+```
+./a.out '*.cpp'
+```
+
